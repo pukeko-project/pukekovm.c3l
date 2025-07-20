@@ -1,0 +1,26 @@
+iface <> { # hash = alksjdfkjewjfijas
+    fn incr() -> '0 # hash = jksdjakjkajsd
+    fn add('0) -> '0
+    fn mult('0) -> '0
+}
+
+iface <'1: alksjdfkjewjfijas, '2: aadkdsadskjwaekj> { # hashes for Int32 and String ifaces
+    fn name() -> '2
+    fn count() -> '1
+}
+
+iface <'1: asdjfkjsakjkas> { # hash for Any iface
+    fn id() -> '1
+}
+
+iface <> { # hash = kjkejjvkajskdjk
+    fn init_decl() # hash = kdskakjfk
+}
+
+# $1 -- stdlib object
+call $1 kjkejjvkajskdjk kdskakjfk
+
+# $1338 -- some number
+(/0 -> ...) (call $1338 alksjdfkjewjfijas jksdjakjkajsd)
+
+with (iface ..., iface ...) (/0 -> )

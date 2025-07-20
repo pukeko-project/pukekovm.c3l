@@ -1,12 +1,13 @@
 module pukekovm;
 
 import std::collections::map;
-
 typedef ObjId = usz;
 
 alias ObjStore = HashMap {ObjId, Obj*};
+alias IfaceStore = HashMap {String, Iface*};
 struct VM {
-  ObjStore store;
+  ObjStore obj_store;
+  IfaceStore iface_store;
 }
 
 alias DeclTable = HashMap {FnDecl, bool} // TODO: rewrite to custom HashSet
@@ -25,7 +26,7 @@ struct Obj {
 }
 
 struct FnDecl {
-  String name;
+  String hash;
 
   Iface* owner;
 
@@ -35,8 +36,9 @@ struct FnDecl {
 }
 
 alias VTable = HashMap {FnDecl, Fn};
+alias IfaceTable = HashMap {String, Iface};
 struct Type {
-  VTable vtable;
+  IfaceTable vtable;
 }
 
 struct Fn {
@@ -47,19 +49,31 @@ struct Fn {
 
 struct Op {
   OpKind discriminant;
-  
+
   OpInner inner;
 }
 
 enum OpKind {
-  FN_CALL,
+  OBJ,
+  IFACE,
+
+}
+
+enum OpNativeKind {
+  NATIVE_FN,
 }
 
 union OpInner {
   OpFnCall fn_call;
 }
 
+union OpNativeInner {
+  NativeFn native_fn;
+}
+
 struct OpFnCall {
   Obj* obj;
   Decl* decl;
 }
+
+alias NativeFn = fn Obj* (Obj*[]);
